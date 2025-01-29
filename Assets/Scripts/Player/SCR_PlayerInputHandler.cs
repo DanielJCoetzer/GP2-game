@@ -58,8 +58,11 @@ public class SCR_PlayerInputHandler : MonoBehaviour {
 
         SubscribeActionValuesToInputEvents();
 
+        //Enables and disables important components
         SCR_GameController.Instance.OnEquipRam += EnableJump;
         SCR_GameController.Instance.OnUnEquipRam += DisableJump;
+        SCR_GameController.Instance.OnEquipRam += EnableDash;
+        SCR_GameController.Instance.OnUnEquipRam += DisableDash;
 
 
         weapon1.SetActive(true);
@@ -71,6 +74,8 @@ public class SCR_PlayerInputHandler : MonoBehaviour {
     {
         SCR_GameController.Instance.OnEquipRam -= EnableJump;
         SCR_GameController.Instance.OnUnEquipRam -= DisableJump;
+        SCR_GameController.Instance.OnEquipRam -= EnableDash;
+        SCR_GameController.Instance.OnUnEquipRam -= DisableDash;
     }
 
     void EnableJump(int id)
@@ -85,6 +90,20 @@ public class SCR_PlayerInputHandler : MonoBehaviour {
         if (id != 1) return;
 
         _jumpAction.Disable();
+    }
+
+    void EnableDash(int id)
+    {
+        if (id != 2) return;
+
+        _dashAction.Enable();
+    }
+
+    void DisableDash(int id)
+    {
+        if (id != 2) return;
+
+        _dashAction.Disable();
     }
 
     private void SubscribeActionValuesToInputEvents() {
@@ -131,6 +150,9 @@ public class SCR_PlayerInputHandler : MonoBehaviour {
 
     private void OnEnable() {
         playerControls.FindActionMap(actionMapName).Enable();
+
+        _jumpAction.Disable();
+        _dashAction.Disable();
     }
 
 

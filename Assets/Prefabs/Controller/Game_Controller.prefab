@@ -45,10 +45,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerPrefab: {fileID: 3873194731718161146, guid: 647661da1febc444eaabebcb35ff24df, type: 3}
+  CurrentPlayer: {fileID: 0}
   CurrentEquippedRam:
-  - {fileID: 11400000, guid: e72b0eeede299364bba9a1a01e5631d5, type: 2}
-  - {fileID: 11400000, guid: ff5887a1bc025e5409c37c4cd765ef89, type: 2}
-  AvailableRam: []
-  AllRam:
-  - {fileID: 11400000, guid: e72b0eeede299364bba9a1a01e5631d5, type: 2}
-  - {fileID: 11400000, guid: ff5887a1bc025e5409c37c4cd765ef89, type: 2}
+  - {fileID: 11400000, guid: 65ac7577ab6a1d042bcc939095ce54e8, type: 2}
+  - {fileID: 11400000, guid: 2ed33258da612254ab2dc2f539549963, type: 2}
+  - {fileID: 11400000, guid: a4fb2d63c16cd054cb6b3021694fe44e, type: 2}
+  - {fileID: 11400000, guid: 65d525ad293c9e6458e3f96a2f30d8e9, type: 2}
+  - {fileID: 11400000, guid: f2061dfc8fd604e4694db4db69b0a78a, type: 2}
+  - {fileID: 11400000, guid: 950d5347920f99a47ad81824ec87f5fc, type: 2}
+  - {fileID: 11400000, guid: 3cce0409d79425646adf1ab6e3431a9d, type: 2}
+  BackPackRam: []
+  AllRamNotEquipped:
+  - {fileID: 11400000, guid: edb540b8fce6e1845b46ed5e232387a0, type: 2}
+  - {fileID: 11400000, guid: 786355eb571720c41bbf8278fa276515, type: 2}
+  - {fileID: 11400000, guid: 399745ba80dfc3741b108b5a77ff5bf5, type: 2}
+  - {fileID: 11400000, guid: b4ac9582c496783478122cab6b79442d, type: 2}
+  - {fileID: 11400000, guid: 4977cfc058b813a4abe582f15edd93b5, type: 2}
+  - {fileID: 11400000, guid: 01186cd089b6ecf4984a62dacee587e7, type: 2}
+  - {fileID: 11400000, guid: 7755ea1a85d303547a241499812e1193, type: 2}

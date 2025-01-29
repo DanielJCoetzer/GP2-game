@@ -4,6 +4,7 @@ public class SCR_Enemy : MonoBehaviour
 {
     [SerializeField] private bool isAlive = true;
     [SerializeField] public int enemyHealth = 30;
+    [SerializeField] public int enemyDamage = 3;
     [SerializeField] private SCR_EnemyController enemyController;
 
     private Vector3 dir = Vector3.left;
@@ -16,6 +17,8 @@ public class SCR_Enemy : MonoBehaviour
     {
         targetPosRight = transform.position.x - 4;
         targetPosLeft = transform.position.x + 4;
+        enemyController = SCR_EnemyController.Instance;
+        
     }
 
     // Update is called once per frame

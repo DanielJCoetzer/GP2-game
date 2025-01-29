@@ -18,7 +18,7 @@ public class SCR_Shotgun : MonoBehaviour
     [SerializeField] private int clipSize = 6;
     [SerializeField] private int shotsFired = 0;
     [SerializeField] private float reloadSpeed = 2.5f;
-    private bool _isReloading = false;
+    [SerializeField] bool _isReloading = false;
 
     [Header("HUD Reference")]
     [SerializeField] private SCR_HeadsUpDisplay hud;
@@ -52,6 +52,8 @@ public class SCR_Shotgun : MonoBehaviour
         hud.UpdateAmmoCount(shotsFired, clipSize);
         hud.pointReticle.SetActive(false);
         hud.shotgunReticle.SetActive(true);
+        _isReloading = false;
+
     }
 
     private void OnDisable()

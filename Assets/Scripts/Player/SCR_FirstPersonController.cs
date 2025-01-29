@@ -4,14 +4,27 @@ using UnityEngine;
 
 
 public class SCR_FirstPersonController : MonoBehaviour {
-    [Header("Movement Speeds")]
+    [Header("Movement Parameters")]
     [SerializeField] private float walkSpeed = 3.0f;
-    [SerializeField] private float sprintMultiplier = 2.0f;
 
+    [Header("Sprint Parameters")]
+    [SerializeField] private float sprintMultiplier = 2.0f;
+    [SerializeField] private float maxStamina = 25f;
+    [SerializeField] private float staminaDepletionRate = 5f;
+    [SerializeField] private float staminaRegenRate = 3f;
+    [SerializeField] private float staminaDrainResetValue = .75f;
+    private float currentStamina;
+    private bool canSprint;
 
     [Header("Jump Parameters")]
     [SerializeField] private float jumpForce = 5.0f;
     [SerializeField] private float gravityMultiplier = 1.0f;
+
+    [Header("Double Jump Parameters")]
+    [SerializeField] private bool doubleJumpEnabled = false;
+    [SerializeField] private float doubleJumpForce = 5.0f;
+    [SerializeField] private float doubleJumpGravityMultiplier = 1.0f;
+    public bool _canDoubleJump = false;
 
     [Header("Dash Parameters")]
     [SerializeField] private float dashDistance = 10.0f;
@@ -26,23 +39,28 @@ public class SCR_FirstPersonController : MonoBehaviour {
     [SerializeField] private CharacterController characterController;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private SCR_PlayerInputHandler playerInputHandler;
+    [SerializeField] private SCR_HeadsUpDisplay hud;
 
 
     Vector3 _currentMovement;
     float _verticalRotation;
     bool _isDashing = false;
     bool _dashOnCooldown = false;
-    private float CurrentSpeed => walkSpeed * (playerInputHandler.SprintTriggered ? sprintMultiplier : 1);
+    private bool _isSprinting => playerInputHandler.SprintTriggered && canSprint;
+    private float CurrentSpeed => _isSprinting ? walkSpeed * sprintMultiplier : walkSpeed;
 
 
     void Start() {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        currentStamina = maxStamina;
+        hud = SCR_HeadsUpDisplay.Instance;
     }
 
 
     void Update() {
-        if (!_isDashing) {
+        if (!_isDashing)
+        {
             Movement();
             Rotation();
 
@@ -52,6 +70,7 @@ public class SCR_FirstPersonController : MonoBehaviour {
             }
         }
 
+        HandleStamina();
     }
 
 
@@ -65,8 +84,8 @@ public class SCR_FirstPersonController : MonoBehaviour {
     private void HandleJumping() {
         if (characterController.isGrounded)
         {
+            _canDoubleJump = doubleJumpEnabled; 
             _currentMovement.y = -0.5f;
-
 
             if (playerInputHandler.JumpTriggered)
             {
@@ -76,14 +95,23 @@ public class SCR_FirstPersonController : MonoBehaviour {
         else
         {
             _currentMovement.y += Physics.gravity.y * gravityMultiplier * Time.deltaTime;
+
+            if (_canDoubleJump && playerInputHandler.JumpTriggered)
+            {
+                _currentMovement.y = doubleJumpForce;
+                _canDoubleJump = false; 
+            }
         }
     }
 
 
     private void Movement() {
         Vector3 _worldDirection = CalculateWorldDirection();
-        _currentMovement.x = _worldDirection.x * CurrentSpeed;
-        _currentMovement.z = _worldDirection.z * CurrentSpeed;
+        if (characterController.isGrounded || _worldDirection != Vector3.zero)
+        {
+            _currentMovement.x = _worldDirection.x * CurrentSpeed;
+            _currentMovement.z = _worldDirection.z * CurrentSpeed;
+        }
 
 
         HandleJumping();
@@ -111,6 +139,23 @@ public class SCR_FirstPersonController : MonoBehaviour {
         VerticalRotate(mouseYRotation);
     }
 
+    private void HandleStamina() {
+        if (_isSprinting && currentStamina > 0)
+        {
+            currentStamina -= staminaDepletionRate * Time.deltaTime;
+            if (currentStamina <= 0) canSprint = false; 
+        }
+        else
+        {
+            currentStamina += staminaRegenRate * Time.deltaTime;
+            if (currentStamina >= maxStamina * staminaDrainResetValue) canSprint = true;
+        }
+
+        currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
+        hud.UpdateStaminaBar(currentStamina / maxStamina);
+    }
+
+
     private IEnumerator PerformDash() {
         _isDashing = true;
         _dashOnCooldown = true;
@@ -118,7 +163,6 @@ public class SCR_FirstPersonController : MonoBehaviour {
         Vector3 dashDirection = inputDirection != Vector3.zero
             ? transform.TransformDirection(inputDirection.normalized) 
             : transform.forward; // Default to forward if there isn't a direciton pressed
-        //Vector3 dashDirection = transform.forward;
         float dashTravelled = 0f;
         while (dashTravelled < dashDistance)
         {

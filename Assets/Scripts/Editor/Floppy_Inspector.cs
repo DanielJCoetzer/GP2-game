@@ -3,9 +3,10 @@ using UnityEngine;
 
 public class Floppy_Inspector : EditorWindow
 {
-    public new string floppyName = "Floppy Name";
-    public int Id;
+    public string floppyName = "Floppy Name";
+    public int Id, Cost;
     public FloppyType floppyType;
+    public string Description = "";
 
     [MenuItem("Tools/Upgrades/Create Floppy")]
     public static void ShowWindow()
@@ -19,7 +20,11 @@ public class Floppy_Inspector : EditorWindow
 
         floppyName = EditorGUILayout.TextField("Enemy name", floppyName);
         Id = EditorGUILayout.IntField("Id", Id);
-        floppyType = (FloppyType)EditorGUILayout.EnumPopup("Floppy type", floppyType); 
+        Cost = EditorGUILayout.IntField("Cost", Cost);
+        floppyType = (FloppyType)EditorGUILayout.EnumPopup("Floppy type", floppyType);
+
+        EditorStyles.textField.wordWrap = true;
+        Description = EditorGUILayout.TextArea(Description);
 
         if (GUILayout.Button("Create Floppy"))
         {
@@ -32,6 +37,8 @@ public class Floppy_Inspector : EditorWindow
         SCR_SO_Ram floppy = CreateInstance<SCR_SO_Ram>();
         floppy.Id = Id;
         floppy.floppyType = floppyType;
+        floppy.Description = Description;
+        floppy.cost = Cost;
         AssetDatabase.CreateAsset(floppy, $"Assets/RamSO/{floppyName}.asset");
         AssetDatabase.SaveAssets();
         
@@ -41,9 +48,7 @@ public class Floppy_Inspector : EditorWindow
         if(floppy.floppyType == FloppyType.ESSENTIAL)
             obj.GetComponent<SCR_GameController>().CurrentEquippedRam.Add(floppy);
         else
-            obj.GetComponent<SCR_GameController>().AvailableRam.Add(floppy);
-
-        obj.GetComponent<SCR_GameController>().AllRam.Add(floppy);
+            obj.GetComponent<SCR_GameController>().AllRamNotEquipped.Add(floppy);
 
         EditorUtility.FocusProjectWindow();
         Selection.activeObject = obj;

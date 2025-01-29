@@ -1,32 +1,45 @@
 using UnityEngine;
 
-public abstract class Unit : IDamageble
+public class Unit : MonoBehaviour, IDamageble
 {
-    protected int _currentHealth;
+    public int currentHealth;
+    public int maxHealth;
 
-    protected int _currentMaxHealth;
-
-    public Unit(int health, int maxHealth)
+    protected Unit(int setMaxHealth)
     {
-        _currentHealth = health;
-        _currentMaxHealth = maxHealth;
-    }
-
-    public virtual void TakeDamage(int damageAmount)
-    {
-        if (_currentHealth > 0)
-        {
-            _currentHealth -= damageAmount;
-        }
-    }
-
-    public bool IsAlive()
-    {
-        return _currentHealth > 0;
+        maxHealth = setMaxHealth;
+        currentHealth = maxHealth;
     }
 
     public int GetHealth()
     {
-        return _currentHealth;
+        return currentHealth;
+    }
+
+    public bool IsAlive()
+    {
+        return currentHealth > 0;
+    }
+
+    public virtual void TakeDamage(int damage)
+    {
+        if (IsAlive())
+        {
+            currentHealth -= damage;
+            currentHealth = Mathf.Max(currentHealth, 0);
+        }
+    }
+
+    public void DamageUnit(int damageAmount)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void HealUnit(int healAmount)
+    {
+        if (!IsAlive()) return;
+
+        currentHealth += healAmount;
+        currentHealth = Mathf.Min(currentHealth, maxHealth);
     }
 }

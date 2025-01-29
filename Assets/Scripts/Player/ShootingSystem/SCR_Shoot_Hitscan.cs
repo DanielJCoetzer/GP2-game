@@ -28,6 +28,8 @@ public class SCR_Shoot_Hitscan : MonoBehaviour
     {
         hud = SCR_HeadsUpDisplay.Instance;
         hud.UpdateAmmoCount(shotsFired, clipSize);
+
+        if(!hud.pointReticle) return;
         hud.pointReticle.SetActive(true);
         hud.shotgunReticle.SetActive(false);
 
@@ -55,6 +57,7 @@ public class SCR_Shoot_Hitscan : MonoBehaviour
         hud.UpdateAmmoCount(shotsFired, clipSize);
         hud.pointReticle.SetActive(true);
         hud.shotgunReticle.SetActive(false);
+        _isReloading = false;
     }
 
 

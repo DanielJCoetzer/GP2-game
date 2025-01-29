@@ -4,6 +4,7 @@ using System.Collections;
 
 public class SCR_EnemyController : MonoBehaviour
 {
+    public static SCR_EnemyController Instance;
     [SerializeField] public List<GameObject> activeEnemies;
     [SerializeField] public  List<GameObject> deadEnemies;
     void Start()
@@ -15,6 +16,17 @@ public class SCR_EnemyController : MonoBehaviour
     void Update()
     {
 
+    }
+
+    private void Awake() {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
     }
 
     public void CheckEnemies(GameObject lastEnemy)
@@ -36,6 +48,12 @@ public class SCR_EnemyController : MonoBehaviour
             CheckEnemies(enemyObject);
 
         }
+    }
+
+    //Anything under this comment is Temp code and might be changed depending on future implementation
+    public void ActivateEnemies()
+    {
+
     }
 
 }

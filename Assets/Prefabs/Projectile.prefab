@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6916116596732158762}
   - component: {fileID: 1986865110784368255}
   - component: {fileID: 1171683364441876702}
-  - component: {fileID: 277344292978863076}
+  - component: {fileID: 8096555117101456775}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Untagged
@@ -105,7 +105,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -133,10 +133,10 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!96 &1171683364441876702
 TrailRenderer:
@@ -254,7 +254,7 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
---- !u!114 &277344292978863076
+--- !u!114 &8096555117101456775
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -266,3 +266,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a9017e2c5fc0e4a9b9f1fe346b7a6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletDamage: 15

@@ -359,13 +359,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f94f31deaef15824790b385cfea57908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LayoutGridSize: {x: 15, y: 15}
-  Rooms:
-  - {fileID: 3255107905372350762, guid: 2d41d5e0b90b52e429a4d44de3779daa, type: 3}
-  - {fileID: 3255107905372350762, guid: b34ebb3611df2a84587d3bc4e1857681, type: 3}
-  - {fileID: 3255107905372350762, guid: 10c7d75d87adffb4987cbdde63f20aa5, type: 3}
-  RoomsToSpawn: 14
-  PossiblePlayerSpawns: []
+  RoomsToSpawn: 30
+  SpawnRoom: {fileID: 1228596014269168496, guid: f6f27b4a9aa7fa14b82a5e0a9a22ec9d, type: 3}
+  FourExitRooms:
+  - {fileID: 3255107905372350762, guid: fbfce42a3c67f8546ba42bb35c18b024, type: 3}
+  ThreeExitRooms:
+  - {fileID: 625502982407580856, guid: a31518c29f71f8446b2df8d9ba9e031b, type: 3}
+  LRoomList:
+  - {fileID: 8511813827120542450, guid: 6b598ce0150cebe4982fcea2c0a3f93c, type: 3}
+  LineRoomList:
+  - {fileID: 8351849099017243747, guid: 2f273abea11609547aa6dc1ea9673ea0, type: 3}
+  - {fileID: 1901186891919600546, guid: 82348020aa4bb5048acceb3c2b6cc8bb, type: 3}
+  OneExitRooms:
+  - {fileID: 1228596014269168496, guid: f6f27b4a9aa7fa14b82a5e0a9a22ec9d, type: 3}
+  CurrentFloorLevel: 0
+  rooms: 0
+  currentSpawnedRooms: []
+  LayoutGridSize: {x: 10, y: 10}
 --- !u!1 &477701731
 GameObject:
   m_ObjectHideFlags: 0
@@ -989,8 +999,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoCount: {fileID: 2107159539}
+  health: {fileID: 0}
+  staminaBar: {fileID: 0}
   pointReticle: {fileID: 0}
   shotgunReticle: {fileID: 0}
+  scopeReticle: {fileID: 0}
 --- !u!114 &1102715185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1279,6 +1292,10 @@ PrefabInstance:
     - target: {fileID: 4659394719415740828, guid: ad0f73cc3fd167b4884aab49b61293c5, type: 3}
       propertyPath: m_Name
       value: Game_Controller
+      objectReference: {fileID: 0}
+    - target: {fileID: 8729666247050367042, guid: ad0f73cc3fd167b4884aab49b61293c5, type: 3}
+      propertyPath: CurrentEquippedRam.Array.size
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

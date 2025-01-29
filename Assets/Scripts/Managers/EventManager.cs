@@ -39,4 +39,9 @@ public class EventManager : MonoBehaviour
     }
 
 
+    public event Action OnPlayerDeath;
+    public void PlayerDied()
+    {
+        OnPlayerDeath?.Invoke();
+    }
 }
